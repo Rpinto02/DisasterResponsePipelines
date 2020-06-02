@@ -1,6 +1,9 @@
 import json
+import random
+
 import plotly
 import pandas as pd
+
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -8,7 +11,7 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+import joblib
 from sqlalchemy import create_engine
 
 
@@ -37,20 +40,75 @@ model = joblib.load("../models/train_classifier.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
-    
+
+
+
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
-    #genre_counts = df.groupby('genre').count()['message']
-    #genre_names = list(genre_counts.index)
-    
+    rowSums = df.iloc[:, 2:].sum(axis=1)
+    multiLabel_counts = rowSums.value_counts()
+    multiLabel_counts = multiLabel_counts.iloc[1:]
+    genre_counts = df.groupby('genre').count()['message']
+    genre_names = list(genre_counts.index)
+    categories = list(df.columns[3:].values)
+    colors = ['aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'black',
+              'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'salmon', 'darksalmon',
+              'lightcoral', 'indianred', 'crimson', 'firebrick', 'coral', 'tomato','orangered', 'gold', 'orange',
+              'lawngreen', 'chartreuse', 'limegreen', 'lime', 'forestgreen', 'green', 'darkgreen', 'greenyellow',
+              'yellowgreen', 'springgreen']
+
+
+
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
             'data': [
                 Bar(
+                    x=multiLabel_counts.index,
+                    y=multiLabel_counts.values,
+                    marker=dict(color=random.sample(colors, len(colors))),
+
+                )
+            ],
+
+            'layout': {
+                'title': 'Comments having multiple labels',
+
+                'yaxis': {
+                    'title': "Number of comments"
+                },
+                'xaxis': {
+                    'title': "Number of labels"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=categories,
+                    y=df.iloc[:, 3:].sum().values,
+                    marker=dict(color=random.sample(colors, len(colors))),
+                )
+            ],
+
+            'layout': {
+                'title': 'Comments in each category',
+
+                'yaxis': {
+                    'title': "Number of comments"
+                },
+                'xaxis': {
+                    'title': "Comment Type",
+                    'tickangle': 50,
+                    'automargin': True,
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
                     x=genre_names,
-                    y=genre_counts
+                    y=genre_counts,
+                    marker=dict(color=['blueviolet', 'brown', 'blanchedalmond'])
                 )
             ],
 
@@ -65,6 +123,7 @@ def index():
             }
         }
     ]
+
     
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
