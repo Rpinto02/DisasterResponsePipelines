@@ -1,0 +1,26 @@
+
+#nav_bar
+    {
+    background: #818588;
+    background-color:#818588;
+    text-align: center;
+    vertical-align: middle;
+
+    }
+
+#home
+{
+font-size: 30px;
+text-align: justify;
+vertical-align: middle;
+color: white;
+text-shadow: 2px 2px 5px blue;
+font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; /*Georgia, serif    Impact, Charcoal, sans-serif*/
+}
+
+.img-fluid
+{
+width:35px;
+height:35px;
+}
+
