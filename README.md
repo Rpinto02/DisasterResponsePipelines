@@ -27,3 +27,4 @@ example: python train_classfier.py 'data/disasters.db' 'model/trained_model.pkl'
 
 Third and last run the run.py in the app folder to launch the website:
 To visit the website simply type localhost:3001 in your browser of choice.
+example: python run.py
