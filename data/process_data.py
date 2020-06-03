@@ -73,7 +73,7 @@ def preparation(messages,cleaned_categories):
     df = df.drop(columns=['id','original'])
 
     #creating dummies from the genre column
-    df = pd.get_dummies(df,columns=['genre'],drop_first=True)
+    #df = pd.get_dummies(df,columns=['genre'],drop_first=True)
 
     # dropping duplicate rows
     df.drop_duplicates(keep=False,inplace=True)
