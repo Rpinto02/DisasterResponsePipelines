@@ -83,11 +83,11 @@ def preparation(messages,cleaned_categories):
 
     return df;
 
-def save_data(df, database_filename):
+def save_data(df, database_filename, database_name):
     '''exports the cleaned dataframe to a SQL database'''
 
-    database_name = 'Messages'
-    connection = database_name+'.db'
+
+    connection = database_filename
     #opening connection and cursor
     conn = sqlite3.connect(connection)
     c = conn.cursor()
@@ -104,8 +104,8 @@ def save_data(df, database_filename):
 
 def main():
 
-    if len(sys.argv) == 4:
-        messages_filepath , categories_filepath, database_filepath = sys.argv[1:]
+    if len(sys.argv) == 5:
+        messages_filepath , categories_filepath, database_filepath, database_name = sys.argv[1:]
 
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
@@ -117,7 +117,7 @@ def main():
         df = preparation(messages, cleaned_categories)
         
         print('Saving data...\n    DATABASE: {}'.format(database_filepath))
-        save_data(df, database_filepath)
+        save_data(df, database_filepath, database_name)
         
         print('Cleaned data saved to database!')
     
