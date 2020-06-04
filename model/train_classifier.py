@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.externals import joblib
+import joblib
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics import accuracy_score
@@ -18,20 +18,22 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.pipeline import Pipeline
+from sklearn.model_selection import GridSearchCV
 
 
-#database_filepath ='Messages.db'
-def load_data(database_filepath):
+
+def load_data(database_filepath, table_name):
     '''loading the messages database'''
 
     #opening the connect and reading the database
     conn = sqlite3.connect(database_filepath)
-    df = pd.read_sql('SELECT * FROM Messages', conn)
+    query = 'SELECT * FROM '+table_name
+    df = pd.read_sql(query, conn)
     df = df.drop(columns=['index'])
 
     #storing the database into X,y
     X = df['message'].values#first scenario will ignore the genre feature
-    y= df[df.columns.difference(['message','genre_news','genre_social'])]
+    y= df[df.columns.difference(['message', 'genre', 'genre_news', 'genre_social'])]
 
     #closing connection
     conn.close()
@@ -65,13 +67,17 @@ def tokenize(text):
 
 
 def build_model(X,y):
-    '''Pipeline for a model with the following parameters'''
+    '''Pipeline for a model with the following parameters
+    These parameters were chosen by running GridSearchCV, for further details on these parameters take a look at the
+        ML-pipeline and ML-tuning notebooks in the preparation folder in the repository
+    '''
 
     pipeline = Pipeline([
-        ('vect',CountVectorizer(tokenizer=tokenize)),
-        ('tfidf',TfidfTransformer()),
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(estimator=RandomForestClassifier()))
     ])
+
     # specify parameters for grid search
     parameters = {
         # 'vect__ngram_range': ((1, 1), (1, 2)),
@@ -79,17 +85,15 @@ def build_model(X,y):
         # 'vect__max_features': (None, 5000, 10000),
         # 'tfidf__use_idf': (True, False),
         'clf__estimator__n_estimators': [100],
-        #'clf__estimator__max_depth': [220],
+        #'clf__estimator__max_depth': [200],
         'clf__estimator__random_state': [42]
 
     }
 
     # create grid search object
-    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=1, n_jobs=3)
-    '''These parameters were chosen by running GridSearchCV, for further details on these parameters take a look at the
-        ML-pipeline and ML-tuning notebooks in the preparation folder in the repository
-        '''
-    return cv;
+    cv = GridSearchCV(pipeline, param_grid=parameters, verbose=1)
+
+    return cv
 
 
 def model_scores(y_test, y_pred):
@@ -138,7 +142,7 @@ def AUC_ROC(y_test, y_pred):
     for i in range(0, y_test.shape[1]):
         auc_score_column = roc_auc_score(y_test.iloc[:, i], y_pred[:, i])
         auc.append(auc_score_column)
-        print('The AUC for', y.columns[i], ' was: ', "%.2f" % auc_score_column, '.')
+        print('The AUC for', y_test.columns[i], ' was: ', "%.2f" % auc_score_column, '.')
 
     # return auc; remove the comment if you want to return the list
 
@@ -151,7 +155,7 @@ def f1_score_labels(y_test, y_pred):
     for i in range(0, y_test.shape[1]):
         f1_score_column = f1_score(y_test.iloc[:, i], y_pred[:, i])
         f1_score_model.append(f1_score_column)
-        print('The f1 score for', y.columns[i], ' was: ', "%.2f" % f1_score_column, '.')
+        print('The f1 score for', y_test.columns[i], ' was: ', "%.2f" % f1_score_column, '.')
 
     # return f1_score_model; remove the comment if you want to return the list
 
@@ -164,7 +168,7 @@ def precision_score_labels(y_test, y_pred):
     for i in range(0, y_test.shape[1]):
         precision_score_column = precision_score(y_test.iloc[:, i], y_pred[:, i])
         precision_score_model.append(precision_score_column)
-        print('The precision score for', y.columns[i], ' was: ', "%.2f" % precision_score_column, '.')
+        print('The precision score for', y_test.columns[i], ' was: ', "%.2f" % precision_score_column, '.')
 
     # return precision_score_model; remove the comment if you want to return the list
 
@@ -177,7 +181,7 @@ def accuracy_score_labels(y_test, y_pred):
     for i in range(0, y_test.shape[1]):
         accuracy_score_column = accuracy_score(y_test.iloc[:, i], y_pred[:, i])
         accuracy_score_model.append(accuracy_score_column)
-        print('The accuracy score for', y.columns[i], ' was: ', "%.2f" % accuracy_score_column, '.')
+        print('The accuracy score for', y_test.columns[i], ' was: ', "%.2f" % accuracy_score_column, '.')
 
     # return accuracy_score_model; remove the comment if you want to return the list
 
@@ -190,7 +194,7 @@ def recall_score_labels(y_test, y_pred):
     for i in range(0, y_test.shape[1]):
         recall_score_column = recall_score(y_test.iloc[:, i], y_pred[:, i])
         recall_score_model.append(recall_score_column)
-        print('The recall score for', y.columns[i], ' was: ', "%.2f" % recall_score_column, '.')
+        print('The recall score for', y_test.columns[i], ' was: ', "%.2f" % recall_score_column, '.')
 
     # return recall_score_model; remove the comment if you want to return the list
 
@@ -265,10 +269,10 @@ def save_model(model, model_filepath):
 
 
 def main():
-    if len(sys.argv) == 3:
-        database_filepath, model_filepath = sys.argv[1:]
+    if len(sys.argv) == 4:
+        database_filepath, table_name, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
-        X, y = load_data(database_filepath)
+        X, y = load_data(database_filepath, table_name)
 
         random_state=42
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2,random_state=random_state)
