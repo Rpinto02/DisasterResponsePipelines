@@ -25,10 +25,8 @@ Finally the web app is design using flask, html and CSS.
 ### Executing Program
 
 * Run the following commands in the project's root directory to set up your database and model.
-  * First run the process_data.py in the data folder to clean the data.
-process_data should be run like this:
-process_data.py messages_dataframe_filepath categories_data_filepath database_filepath
-example: python process_data.py '/data/messages.csv' '/data/categories.csv' 'data/disasters.db'
+  * To run ETL Pipeline that lceans data and stores in database
+  '''python data/process_data.py '/data/disaster_messages.csv' '/data/disaster_categories.csv' 'data/DisastersResponse.db''''
  
 Second run the train_classifer.py in the models folder to train and save to a pickle file the predictive model:
 train_classifer shoud be run like this:
