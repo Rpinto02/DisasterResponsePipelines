@@ -1,6 +1,10 @@
 # Disaster Response Pipelines
 
 ## Introduction
+The project is to create a web interface where you have to enter a disaster message and it will categorize the type of message using natural language processing. This will help in effective response and action to be taken to each message. This project is part of Data Science Nanodegree Program by Udacity in collaboration with Figure Eight. The dataset is a combination of pre-labelled tweet and messages from real-life disaster.
+
+To achieve this a ETL and Machine Learning pipelines were built.
+
 This an open source project to make an ETL pipeline and a Machine Learning pipeline of a model to categorize disasters messages.
 Furthermore it will be implemented a browser interface to use this model.
 
@@ -15,8 +19,10 @@ Finally the web app is design using flask, html and CSS.
 
 
 ## Getting started
-### Dependancies
-### Intructions:
+
+### Dependencies
+
+### Executing Program
 
 First run the process_data.py in the data folder to clean the data.
 process_data should be run like this:
