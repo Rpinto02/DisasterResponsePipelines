@@ -1,5 +1,6 @@
-# DisasterResponsePipelines
+# Disaster Response Pipelines
 
+## Introduction
 This an open source project to make an ETL pipeline and a Machine Learning pipeline of a model to categorize disasters messages.
 Furthermore it will be implemented a browser interface to use this model.
 
@@ -13,7 +14,9 @@ The files to prepare the data and train the model can be found in the respective
 Finally the web app is design using flask, html and CSS.
 
 
-Intructions:
+## Getting started
+### Dependancies
+### Intructions:
 
 First run the process_data.py in the data folder to clean the data.
 process_data should be run like this:
@@ -28,3 +31,9 @@ example: python train_classfier.py 'data/disasters.db' 'model/trained_model.pkl'
 Third and last run the run.py in the app folder to launch the website:
 To visit the website simply type localhost:3001 in your browser of choice.
 example: python run.py
+
+## License
+
+## Issue/Bug
+
+Please open issues on github to report bugs or make feature requests.
