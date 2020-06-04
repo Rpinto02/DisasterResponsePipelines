@@ -7,10 +7,6 @@ The decision making behind the cleaning of the data as well as the exploratory a
 
 <img src="github.com/Rpinto02/DisasterResponsePipelines/blob/master/app/templates/assets/Main_page.jpg" width="200"/> <img src="https://github.com/Rpinto02/DisasterResponsePipelines/blob/master/app/templates/assets/Classifier_page.jpg" width="300"/>
 
-![alt-text-1](https://github.com/Rpinto02/DisasterResponsePipelines/blob/master/app/templates/assets/Classifier_page.jpg "Main Page") ![alt-text-2](https://github.com/Rpinto02/DisasterResponsePipelines/blob/master/app/templates/assets/Classifier_page.jpg "Classifer Page")
-
-![alt text](https://github.com/Rpinto02/DisasterResponsePipelines/blob/master/app/templates/assets/Classifier_page.jpg)
-![alt text](https://github.com/Rpinto02/DisasterResponsePipelines/blob/master/app/templates/assets/Classifier_page.jpg)
 
 ## Getting started
 
