@@ -49,13 +49,7 @@ else:
           'fetch the model to as third argument. \n\nExample: python ' \
           'train_classifier.py ../data/DisasterResponse.db table_name classifier.pkl')
 
-'''database_filepath
-table_name
-engine = create_engine('sqlite:///../data/DisastersResponse.db')
-df = pd.read_sql_table('table_name', engine)
 
-# load model
-model = joblib.load("../model/trained_classifier.pkl")'''
 
 
 # index webpage displays cool visuals and receives user input text for model
