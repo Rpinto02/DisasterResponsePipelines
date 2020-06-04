@@ -41,7 +41,7 @@ python run.py
 
 
 ## License
-[License](https://opensource.org/licenses/MIT)
+[MIT](https://opensource.org/licenses/MIT)
 
 ## Issue/Bug
 
