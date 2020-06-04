@@ -5,6 +5,7 @@ The project is to create a web interface where you have to enter a disaster mess
 
 The decision making behind the cleaning of the data as well as the exploratory analysis and model building process can all be found inside the notebooks in the preparation directory.
 
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
 
 ## Getting started
 
@@ -35,7 +36,7 @@ The decision making behind the cleaning of the data as well as the exploratory a
   ```
 * Run the following command in the app's directory to run your web app.
 ```
-python run.py
+python run.py ../data/DisastersResponse.db table_name ../model/trained_model.pkl
 ```
 * Go to http://localhost:3001/
 
