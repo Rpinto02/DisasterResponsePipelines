@@ -1,5 +1,6 @@
 import json
 import random
+import sys
 
 import plotly
 import pandas as pd
@@ -28,12 +29,33 @@ def tokenize(text):
 
     return clean_tokens
 
-# load data
-engine = create_engine('sqlite:///../data/Messages.db')
-df = pd.read_sql_table('Messages', engine)
+
+
+if len(sys.argv) == 4:
+    database_filepath, table_name, classifier_path = sys.argv[1:]
+    # load data
+    print('Loading data...\n    DATABASE: {}'.format(database_filepath))
+    engine = create_engine('sqlite:///'+database_filepath)
+    df = pd.read_sql_table(table_name, engine)
+    # load model
+    print('Loading model...')
+    model = joblib.load(classifier_path)
+    print('Loading page...')
+
+else:
+    print('Please provide the filepath of the disaster messages database ' \
+          'as the first argument, the name of the table as the second argument,'\
+          ' and the filepath of the pickle file to ' \
+          'fetch the model to as third argument. \n\nExample: python ' \
+          'train_classifier.py ../data/DisasterResponse.db table_name classifier.pkl')
+
+'''database_filepath
+table_name
+engine = create_engine('sqlite:///../data/DisastersResponse.db')
+df = pd.read_sql_table('table_name', engine)
 
 # load model
-model = joblib.load("../model/train_classifier.pkl")
+model = joblib.load("../model/trained_classifier.pkl")'''
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -152,7 +174,7 @@ def go():
 
 
 def main():
-    app.run(host='0.0.0.0', port=3001, debug=True)
+        app.run(host='0.0.0.0', port=3001, debug=True)
 
 
 if __name__ == '__main__':
