@@ -10,6 +10,18 @@ The decision making behind the cleaning of the data as well as the exploratory a
 
 ### Dependencies
 
+* Python 3.8
+* Scikit-Learn 023.1
+* NTLK, re
+* SQLalchemy, sqlite3
+* random, statistics
+* Pandas, Numpy
+* Json
+* Joblib
+* Plotly
+* Flask
+
+
 ### Executing Program
 
 * Run the following commands in the project's root directory to set up your database and model.
