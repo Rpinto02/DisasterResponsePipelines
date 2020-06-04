@@ -25,13 +25,13 @@ The decision making behind the cleaning of the data as well as the exploratory a
 ### Executing Program
 
 * Run the following commands in the project's root directory to set up your database and model.
-  * To run ETL Pipeline that lceans data and stores in database
+  * To run ETL Pipeline that cleans data and stores in database
   ```
-  python data/process_data.py '/data/disaster_messages.csv' '/data/disaster_categories.csv' 'data/DisastersResponse.db
+  python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisastersResponse.db table_name
   ```
   * To run ML pipeline that trains classifier and saves.
   ```
-  python model/train_classfier.py 'data/DisastersResponse.db' 'model/trained_model.pkl'
+  python model/train_classifier.py data/DisastersResponse.db table_name model/trained_model.pkl
   ```
 * Run the following command in the app's directory to run your web app.
 ```
