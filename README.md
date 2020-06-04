@@ -6,6 +6,7 @@ The project is to create a web interface where you have to enter a disaster mess
 The decision making behind the cleaning of the data as well as the exploratory analysis and model building process can all be found inside the notebooks in the preparation directory.
 
 ![alt text](https://github.com/Rpinto02/DisasterResponsePipelines/blob/master/app/templates/assets/Classifier_page.jpg)
+![alt text](https://github.com/Rpinto02/DisasterResponsePipelines/blob/master/app/templates/assets/Classifier_page.jpg)
 
 ## Getting started
 
